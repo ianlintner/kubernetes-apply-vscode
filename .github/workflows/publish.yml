@@ -8,6 +8,9 @@ on:
         type: boolean
         required: false
         default: false
+  release:
+    types:
+      - published
   push:
     tags:
       - 'v*.*.*'
@@ -21,6 +24,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # For releases, build exactly what was released (the tag), not whatever is currently on main.
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,10 +39,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Verify tag matches package.json version
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Ensure release/tag commit is on main
+        if: github.event_name == 'release'
         run: |
-          node -e "const v=require('./package.json').version; const t=process.env.GITHUB_REF_NAME.replace(/^v/,''); if(v!==t){ console.error(`Version mismatch: package.json=${v} tag=${t}`); process.exit(1);} console.log(`Version OK: ${v}`);"
+          set -euo pipefail
+          git fetch origin main --no-tags
+
+          # We checked out the release tag above, so HEAD is the tag commit.
+          if git merge-base --is-ancestor HEAD origin/main; then
+            echo "Release tag commit is contained in main; continuing."
+          else
+            echo "Release tag commit is NOT contained in main; skipping publish." >&2
+            echo "SKIP_PUBLISH=1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Verify tag matches package.json version
+        if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'release'
+        run: |
+          node -e "const v=require('./package.json').version; const tag=(process.env.GITHUB_EVENT_NAME==='release' ? (require(process.env.GITHUB_EVENT_PATH).release.tag_name) : process.env.GITHUB_REF_NAME); const t=String(tag||'').replace(/^v/,''); if(!t){ console.error('Could not determine tag name for version check'); process.exit(1);} if(v!==t){ console.error(`Version mismatch: package.json=${v} tag=${t}`); process.exit(1);} console.log(`Version OK: ${v}`);"
 
       - name: Compile
         run: npm run compile
@@ -43,7 +65,7 @@ jobs:
         run: npm run package
 
       - name: Publish to Visual Studio Marketplace
-        if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.publish == 'true'
+        if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'release' || github.event.inputs.publish == 'true') && env.SKIP_PUBLISH != '1'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: npx --yes @vscode/vsce publish -p "$VSCE_PAT"

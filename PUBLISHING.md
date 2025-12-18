@@ -6,7 +6,7 @@ This repo is already set up to publish via GitHub Actions when you push a versio
 
 1. **Create / verify a publisher**
    - Go to the Visual Studio Marketplace publisher management page:
-     https://marketplace.visualstudio.com/manage
+   <https://marketplace.visualstudio.com/manage>
    - Create a publisher **with the exact ID in** `package.json`:
      - `publisher`: `k8smanifest`
 
@@ -15,14 +15,14 @@ This repo is already set up to publish via GitHub Actions when you push a versio
 2. **Create a Marketplace PAT (publish token)**
    - Create an Azure DevOps Personal Access Token (PAT) with the Marketplace publish scope.
    - The simplest place to start is:
-     https://dev.azure.com
+   <https://dev.azure.com>
      then **User settings → Personal access tokens**.
 
    Notes:
    - Make sure the token can publish to the Marketplace.
    - Keep the token somewhere safe; you’ll only see it once.
 
-3. **Add the token to GitHub Secrets**
+3. **Add the token to GitHub Secrets (repo-level)**
    - In your GitHub repo: **Settings → Secrets and variables → Actions**
    - Add a secret:
      - Name: `VSCE_PAT`
@@ -39,6 +39,15 @@ This repo is already set up to publish via GitHub Actions when you push a versio
    - compile
    - package the `.vsix`
    - publish to the Marketplace
+
+## Safe dry-run in GitHub Actions
+
+The workflow supports a manual run that **packages only** (no publish) by default:
+
+- GitHub → Actions → **Publish Extension** → Run workflow
+- Leave `publish` unchecked to do a safe build/package validation.
+
+If you check `publish`, it will publish using the repo secret `VSCE_PAT`.
 
 ## Manual publishing (local)
 

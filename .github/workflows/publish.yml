@@ -2,6 +2,12 @@ name: Publish Extension
 
 on:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'If true, publish to the VS Code Marketplace (danger: irreversible)'
+        type: boolean
+        required: false
+        default: false
   push:
     tags:
       - 'v*.*.*'
@@ -26,6 +32,7 @@ jobs:
         run: npm ci
 
       - name: Verify tag matches package.json version
+        if: startsWith(github.ref, 'refs/tags/v')
         run: |
           node -e "const v=require('./package.json').version; const t=process.env.GITHUB_REF_NAME.replace(/^v/,''); if(v!==t){ console.error(`Version mismatch: package.json=${v} tag=${t}`); process.exit(1);} console.log(`Version OK: ${v}`);"
 
@@ -36,6 +43,7 @@ jobs:
         run: npm run package
 
       - name: Publish to Visual Studio Marketplace
+        if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.publish == 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: npx --yes @vscode/vsce publish -p "$VSCE_PAT"

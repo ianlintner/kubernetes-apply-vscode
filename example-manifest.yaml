@@ -1,0 +1,56 @@
+---
+# Example Kubernetes Deployment Manifest
+# This file demonstrates what the extension can apply
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-app
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+  namespace: demo-app
+data:
+  app.properties: |
+    debug=false
+    environment=demo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: demo-app
+  labels:
+    app: demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: demo-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: DEMO_VAR
+          value: "hello-kubernetes"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-service
+  namespace: demo-app
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: demo

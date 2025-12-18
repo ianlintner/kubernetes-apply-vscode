@@ -1,0 +1,133 @@
+{
+  "name": "k8s-manifest-applier",
+  "displayName": "Kubernetes Manifest Applier",
+  "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click actions",
+  "version": "0.0.1",
+  "publisher": "k8smanifest",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Formatters"
+  ],
+  "keywords": [
+    "kubernetes",
+    "k8s",
+    "kustomize",
+    "kubectl",
+    "manifest",
+    "deployment"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onLanguage:yaml",
+    "workspaceContains:**/kustomization.yaml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "k8s-manifest.apply",
+        "title": "Apply Manifest",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8s-manifest.validate",
+        "title": "Validate Manifest",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8s-manifest.buildKustomize",
+        "title": "Build with Kustomize",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8s-manifest.applyKustomize",
+        "title": "Apply Kustomize",
+        "category": "Kubernetes"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "k8s-manifest.apply",
+          "when": "resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "1_modification"
+        },
+        {
+          "command": "k8s-manifest.validate",
+          "when": "resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "1_modification"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "k8s-manifest.apply",
+          "when": "resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "2_workspace"
+        },
+        {
+          "command": "k8s-manifest.buildKustomize",
+          "when": "resourceFilename == kustomization.yaml || resourceFilename == kustomization.yml",
+          "group": "2_workspace"
+        },
+        {
+          "command": "k8s-manifest.applyKustomize",
+          "when": "resourceFilename == kustomization.yaml || resourceFilename == kustomization.yml",
+          "group": "2_workspace"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Kubernetes Manifest Applier",
+      "properties": {
+        "k8s-manifest.enableCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show apply/validate buttons in the editor gutter"
+        },
+        "k8s-manifest.kubectlContext": {
+          "type": "string",
+          "default": "",
+          "description": "kubectl context to use (empty = current context)"
+        },
+        "k8s-manifest.kubectlNamespace": {
+          "type": "string",
+          "default": "",
+          "description": "kubectl namespace to use (empty = default)"
+        },
+        "k8s-manifest.dryRun": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run kubectl apply with --dry-run=client"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.5",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "@vscode/test-electron": "^2.3.3",
+    "eslint": "^8.45.0",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

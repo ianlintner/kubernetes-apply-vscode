@@ -7,6 +7,8 @@
 
 Apply and validate Kubernetes manifests (and Kustomize builds) directly from VS Code with a couple of clicks.
 
+![Kubert Logo](docs/assets/logo.png)
+
 ![Extension Screenshot](docs/assets/screenshot.png)
 
 - **Code Lens buttons** in YAML files: Apply or validate instantly

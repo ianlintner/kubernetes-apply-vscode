@@ -15,7 +15,7 @@ Apply and validate Kubernetes manifests (and Kustomize builds) directly from VS 
 
 ## Documentation
 
-Full documentation lives at **https://ianlintner.github.io/kubernetes-apply-vscode/** and is built with MkDocs.
+Full documentation lives at **<https://ianlintner.github.io/kubernetes-apply-vscode/>** and is built with MkDocs.
 
 - [Getting Started](https://ianlintner.github.io/kubernetes-apply-vscode/getting-started/)
 - [Usage](https://ianlintner.github.io/kubernetes-apply-vscode/usage/)

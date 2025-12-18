@@ -1,7 +1,5 @@
-import * as vscode from 'vscode';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import * as path from 'path';
 
 const execFileAsync = promisify(execFile);
 
@@ -174,12 +172,16 @@ export class CliExecutor {
         stderr: result.stderr,
         exitCode: 0,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as NodeJS.ErrnoException & {
+        stdout?: string;
+        stderr?: string;
+      };
       return {
         success: false,
-        stdout: error.stdout || '',
-        stderr: error.stderr || error.message || 'Unknown error',
-        exitCode: error.code || 1,
+        stdout: err.stdout ?? '',
+        stderr: err.stderr ?? err.message ?? 'Unknown error',
+        exitCode: typeof err.code === 'number' ? err.code : 1,
       };
     }
   }
@@ -222,11 +224,12 @@ export class CliExecutor {
 
         child.stdin?.write(stdin);
         child.stdin?.end();
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const err = error as NodeJS.ErrnoException;
         resolve({
           success: false,
           stdout: '',
-          stderr: error.message || 'Unknown error',
+          stderr: err?.message || 'Unknown error',
           exitCode: 1,
         });
       }

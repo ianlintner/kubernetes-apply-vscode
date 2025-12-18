@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { ManifestDetector } from '../utils/manifestDetector';
 import { CliExecutor } from '../utils/cliExecutor';
 import * as output from '../utils/outputChannel';
+import * as fs from 'fs';
 
 /**
  * Gets configuration values for kubectl execution
@@ -103,7 +103,7 @@ export async function buildKustomize(uri: vscode.Uri): Promise<void> {
     let dirPath = uri?.fsPath;
 
     // If it's a file, use its directory
-    if (dirPath && !require('fs').statSync(dirPath).isDirectory()) {
+    if (dirPath && !fs.statSync(dirPath).isDirectory()) {
       dirPath = path.dirname(dirPath);
     }
 
@@ -141,7 +141,7 @@ export async function applyKustomize(uri: vscode.Uri): Promise<void> {
     let dirPath = uri?.fsPath;
 
     // If it's a file, use its directory
-    if (dirPath && !require('fs').statSync(dirPath).isDirectory()) {
+    if (dirPath && !fs.statSync(dirPath).isDirectory()) {
       dirPath = path.dirname(dirPath);
     }
 

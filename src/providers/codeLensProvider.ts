@@ -12,8 +12,9 @@ export class ManifestCodeLensProvider implements vscode.CodeLensProvider {
 
   provideCodeLenses(
     document: vscode.TextDocument,
-    token: vscode.CancellationToken
+    _token: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.CodeLens[]> {
+    void _token;
     // Check if Code Lens is enabled
     const config = vscode.workspace.getConfiguration('k8s-manifest');
     if (!config.get<boolean>('enableCodeLens', true)) {
@@ -66,7 +67,8 @@ export class ManifestCodeLensProvider implements vscode.CodeLensProvider {
     return codeLenses;
   }
 
-  resolveCodeLens?(codeLens: vscode.CodeLens, token: vscode.CancellationToken): vscode.ProviderResult<vscode.CodeLens> {
+  resolveCodeLens?(codeLens: vscode.CodeLens, _token: vscode.CancellationToken): vscode.ProviderResult<vscode.CodeLens> {
+    void _token;
     return codeLens;
   }
 }

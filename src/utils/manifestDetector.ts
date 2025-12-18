@@ -2,21 +2,25 @@ import * as vscode from 'vscode';
 import * as yaml from 'js-yaml';
 import * as path from 'path';
 
-export interface K8sManifest {
+type K8sMetadata = {
+  name?: string;
+  namespace?: string;
+} & Record<string, unknown>;
+
+export type K8sManifest = {
   apiVersion?: string;
   kind?: string;
-  metadata?: {
-    name?: string;
-    namespace?: string;
-    [key: string]: any;
-  };
-  [key: string]: any;
-}
+  metadata?: K8sMetadata;
+} & Record<string, unknown>;
 
 export interface DetectionResult {
   isK8sManifest: boolean;
   isKustomization: boolean;
   manifests: K8sManifest[];
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 
 /**
@@ -72,16 +76,16 @@ export class ManifestDetector {
         .filter((doc) => doc.length > 0);
 
       for (const docContent of documents) {
-        const doc = yaml.load(docContent) as K8sManifest | null;
+        const rawDoc = yaml.load(docContent);
 
-        if (doc && typeof doc === 'object') {
-          // Check if it's a valid K8s manifest
+        if (isRecord(rawDoc)) {
+          const doc = rawDoc as K8sManifest;
+
           if (this.isValidK8sResource(doc)) {
             isK8s = true;
             manifests.push(doc);
           }
 
-          // Check if it's a Kustomization resource
           if (this.isKustomizationResource(doc)) {
             isKustomization = true;
             manifests.push(doc);

@@ -15,6 +15,12 @@ on:
     tags:
       - 'v*.*.*'
 
+concurrency:
+  # Ensure only one publish run per version/tag at a time. This prevents the
+  # tag-push run and the release-published run from both executing concurrently.
+  group: publish-extension-${{ github.ref_name || github.event.release.tag_name || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest

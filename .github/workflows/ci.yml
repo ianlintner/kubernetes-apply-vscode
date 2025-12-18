@@ -1,55 +1,15 @@
-name: CI
+name: CI (Deprecated)
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
+  workflow_dispatch:
 
 jobs:
-  node-ci:
+  deprecated:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Xvfb (Linux)
+      - name: This workflow is deprecated
         run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: xvfb-run -a npm test -- --runInBand
-
-      - name: Compile
-        run: npm run compile
-
-  docs-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install MkDocs
-        run: |
-          python -m pip install --upgrade pip
-          pip install mkdocs mkdocs-material pymdown-extensions
-
-      - name: Build docs
-        run: mkdocs build --strict
+          echo "This workflow is deprecated and no longer runs automatically."
+          echo "Use these workflows instead:"
+          echo "- Node CI (.github/workflows/node-ci.yml)"
+          echo "- Docs Check (.github/workflows/docs-check.yml)"

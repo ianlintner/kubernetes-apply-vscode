@@ -1,6 +1,5 @@
 # Kubernetes Manifest Applier Extension
 
-[![CI](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml)
 [![Node CI](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/node-ci.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/node-ci.yml)
 [![Docs Check](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs-check.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs-check.yml)
 [![Docs Deploy](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml)

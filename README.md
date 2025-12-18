@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml)
 [![Docs](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml)
+[![Publish](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/publish.yml)
 
 Apply and validate Kubernetes manifests (and Kustomize builds) directly from VS Code with a couple of clicks.
 

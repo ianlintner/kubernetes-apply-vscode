@@ -20,6 +20,11 @@
       "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml/badge.svg?branch=main",
       "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml",
       "description": "Docs"
+    },
+    {
+      "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/publish.yml/badge.svg?branch=main",
+      "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/publish.yml",
+      "description": "Publish"
     }
   ],
   "markdown": "github",

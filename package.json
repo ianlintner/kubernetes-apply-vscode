@@ -10,6 +10,18 @@
     "color": "#1F6FEB",
     "theme": "dark"
   },
+  "badges": [
+    {
+      "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml/badge.svg?branch=main",
+      "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml",
+      "description": "CI"
+    },
+    {
+      "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml/badge.svg?branch=main",
+      "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml",
+      "description": "Docs"
+    }
+  ],
   "markdown": "github",
   "homepage": "https://ianlintner.github.io/kubernetes-apply-vscode/",
   "bugs": {

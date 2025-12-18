@@ -145,6 +145,8 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "package": "npx --yes @vscode/vsce package",
     "publish": "npx --yes @vscode/vsce publish",
     "pretest": "npm run compile && npm run lint",

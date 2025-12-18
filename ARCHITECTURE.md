@@ -19,11 +19,11 @@ This VS Code extension provides a lightweight interface for applying Kubernetes 
 **Usage**:
 
 ```typescript
-import { ManifestDetector } from "./utils/manifestDetector";
+import { ManifestDetector } from './utils/manifestDetector';
 
 const detection = ManifestDetector.analyzeDocument(document);
 if (detection.isK8sManifest) {
-  console.log("Found", detection.manifests.length, "Kubernetes resources");
+  console.log('Found', detection.manifests.length, 'Kubernetes resources');
 }
 ```
 
@@ -45,18 +45,18 @@ if (detection.isK8sManifest) {
 **Usage**:
 
 ```typescript
-import { CliExecutor } from "./utils/cliExecutor";
+import { CliExecutor } from './utils/cliExecutor';
 
-const result = await CliExecutor.applyManifest("manifest.yaml", {
-  context: "staging",
-  namespace: "default",
+const result = await CliExecutor.applyManifest('manifest.yaml', {
+  context: 'staging',
+  namespace: 'default',
   dryRun: true,
 });
 
 if (result.success) {
-  console.log("Applied successfully");
+  console.log('Applied successfully');
 } else {
-  console.error("Error:", result.stderr);
+  console.error('Error:', result.stderr);
 }
 ```
 
@@ -103,10 +103,7 @@ export async function myNewCommand(uri: vscode.Uri): Promise<void> {
 
 ```typescript
 context.subscriptions.push(
-  vscode.commands.registerCommand(
-    "k8s-manifest.myNewCommand",
-    commands.myNewCommand,
-  ),
+  vscode.commands.registerCommand('k8s-manifest.myNewCommand', commands.myNewCommand),
 );
 ```
 
@@ -149,8 +146,8 @@ In `package.json`, add to `contributes.configuration.properties`:
 Then access in code:
 
 ```typescript
-const config = vscode.workspace.getConfiguration("k8s-manifest");
-const myOption = config.get<boolean>("myOption");
+const config = vscode.workspace.getConfiguration('k8s-manifest');
+const myOption = config.get<boolean>('myOption');
 ```
 
 ### Adding New Providers
@@ -169,7 +166,7 @@ Register in `src/extension.ts`:
 
 ```typescript
 context.subscriptions.push(
-  vscode.languages.registerSomeProvider({ language: "yaml" }, new MyProvider()),
+  vscode.languages.registerSomeProvider({ language: 'yaml' }, new MyProvider()),
 );
 ```
 
@@ -218,22 +215,16 @@ try {
   // Operation
   output.log(`Starting operation...`);
   const result = await cliCommand();
-  output.logCommandOutput(
-    command,
-    args,
-    result.stdout,
-    result.stderr,
-    result.exitCode,
-  );
+  output.logCommandOutput(command, args, result.stdout, result.stderr, result.exitCode);
 
   if (result.success) {
-    await output.showSuccess("Operation succeeded");
+    await output.showSuccess('Operation succeeded');
   } else {
     await output.showErrorWithOutput(`Operation failed:\n${result.stderr}`);
   }
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
-  output.logError("Operation error", message);
+  output.logError('Operation error', message);
   await output.showError(`Operation failed: ${message}`);
 }
 ```
@@ -258,8 +249,8 @@ try {
 Create test files in `test/suite/`:
 
 ```typescript
-suite("Feature Test", () => {
-  test("should do something", () => {
+suite('Feature Test', () => {
+  test('should do something', () => {
     // Test implementation
   });
 });

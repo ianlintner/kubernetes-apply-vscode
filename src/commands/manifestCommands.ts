@@ -1,18 +1,18 @@
-import * as vscode from "vscode";
-import * as path from "path";
-import { CliExecutor } from "../utils/cliExecutor";
-import * as output from "../utils/outputChannel";
-import * as fs from "fs";
+import * as vscode from 'vscode';
+import * as path from 'path';
+import { CliExecutor } from '../utils/cliExecutor';
+import * as output from '../utils/outputChannel';
+import * as fs from 'fs';
 
 /**
  * Gets configuration values for kubectl execution
  */
 function getKubectlConfig() {
-  const config = vscode.workspace.getConfiguration("k8s-manifest");
+  const config = vscode.workspace.getConfiguration('k8s-manifest');
   return {
-    context: config.get<string>("kubectlContext") || undefined,
-    namespace: config.get<string>("kubectlNamespace") || undefined,
-    dryRun: config.get<boolean>("dryRun") || false,
+    context: config.get<string>('kubectlContext') || undefined,
+    namespace: config.get<string>('kubectlNamespace') || undefined,
+    dryRun: config.get<boolean>('dryRun') || false,
   };
 }
 
@@ -21,12 +21,10 @@ function getKubectlConfig() {
  */
 export async function applyManifest(uri: vscode.Uri): Promise<void> {
   try {
-    const filePath = uri
-      ? uri.fsPath
-      : vscode.window.activeTextEditor?.document.fileName;
+    const filePath = uri ? uri.fsPath : vscode.window.activeTextEditor?.document.fileName;
 
     if (!filePath) {
-      await output.showError("No file selected");
+      await output.showError('No file selected');
       return;
     }
 
@@ -42,8 +40,8 @@ export async function applyManifest(uri: vscode.Uri): Promise<void> {
     });
 
     output.logCommandOutput(
-      "kubectl",
-      ["apply", "-f", path.basename(filePath)],
+      'kubectl',
+      ['apply', '-f', path.basename(filePath)],
       result.stdout,
       result.stderr,
       result.exitCode,
@@ -52,13 +50,11 @@ export async function applyManifest(uri: vscode.Uri): Promise<void> {
     if (result.success) {
       await output.showSuccess(`✓ Manifest applied successfully`);
     } else {
-      await output.showErrorWithOutput(
-        `✗ Failed to apply manifest:\n${result.stderr}`,
-      );
+      await output.showErrorWithOutput(`✗ Failed to apply manifest:\n${result.stderr}`);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    output.logError("Error applying manifest", message);
+    output.logError('Error applying manifest', message);
     await output.showError(`Failed to apply manifest: ${message}`);
   }
 }
@@ -68,12 +64,10 @@ export async function applyManifest(uri: vscode.Uri): Promise<void> {
  */
 export async function validateManifest(uri: vscode.Uri): Promise<void> {
   try {
-    const filePath = uri
-      ? uri.fsPath
-      : vscode.window.activeTextEditor?.document.fileName;
+    const filePath = uri ? uri.fsPath : vscode.window.activeTextEditor?.document.fileName;
 
     if (!filePath) {
-      await output.showError("No file selected");
+      await output.showError('No file selected');
       return;
     }
 
@@ -88,14 +82,8 @@ export async function validateManifest(uri: vscode.Uri): Promise<void> {
     });
 
     output.logCommandOutput(
-      "kubectl",
-      [
-        "apply",
-        "-f",
-        path.basename(filePath),
-        "--dry-run=client",
-        "--validate=true",
-      ],
+      'kubectl',
+      ['apply', '-f', path.basename(filePath), '--dry-run=client', '--validate=true'],
       result.stdout,
       result.stderr,
       result.exitCode,
@@ -104,13 +92,11 @@ export async function validateManifest(uri: vscode.Uri): Promise<void> {
     if (result.success) {
       await output.showSuccess(`✓ Manifest is valid`);
     } else {
-      await output.showErrorWithOutput(
-        `✗ Manifest validation failed:\n${result.stderr}`,
-      );
+      await output.showErrorWithOutput(`✗ Manifest validation failed:\n${result.stderr}`);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    output.logError("Error validating manifest", message);
+    output.logError('Error validating manifest', message);
     await output.showError(`Failed to validate manifest: ${message}`);
   }
 }
@@ -128,7 +114,7 @@ export async function buildKustomize(uri: vscode.Uri): Promise<void> {
     }
 
     if (!dirPath) {
-      await output.showError("No directory selected");
+      await output.showError('No directory selected');
       return;
     }
 
@@ -140,8 +126,8 @@ export async function buildKustomize(uri: vscode.Uri): Promise<void> {
     });
 
     output.logCommandOutput(
-      "kustomize",
-      ["build", dirPath],
+      'kustomize',
+      ['build', dirPath],
       result.stdout,
       result.stderr,
       result.exitCode,
@@ -150,13 +136,11 @@ export async function buildKustomize(uri: vscode.Uri): Promise<void> {
     if (result.success) {
       await output.showSuccess(`✓ Kustomization built successfully`);
     } else {
-      await output.showErrorWithOutput(
-        `✗ Failed to build Kustomization:\n${result.stderr}`,
-      );
+      await output.showErrorWithOutput(`✗ Failed to build Kustomization:\n${result.stderr}`);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    output.logError("Error building Kustomization", message);
+    output.logError('Error building Kustomization', message);
     await output.showError(`Failed to build Kustomization: ${message}`);
   }
 }
@@ -174,7 +158,7 @@ export async function applyKustomize(uri: vscode.Uri): Promise<void> {
     }
 
     if (!dirPath) {
-      await output.showError("No directory selected");
+      await output.showError('No directory selected');
       return;
     }
 
@@ -190,8 +174,8 @@ export async function applyKustomize(uri: vscode.Uri): Promise<void> {
     });
 
     output.logCommandOutput(
-      "kubectl",
-      ["apply", "-k", dirPath],
+      'kubectl',
+      ['apply', '-k', dirPath],
       result.stdout,
       result.stderr,
       result.exitCode,
@@ -200,13 +184,11 @@ export async function applyKustomize(uri: vscode.Uri): Promise<void> {
     if (result.success) {
       await output.showSuccess(`✓ Kustomization applied successfully`);
     } else {
-      await output.showErrorWithOutput(
-        `✗ Failed to apply Kustomization:\n${result.stderr}`,
-      );
+      await output.showErrorWithOutput(`✗ Failed to apply Kustomization:\n${result.stderr}`);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    output.logError("Error applying Kustomization", message);
+    output.logError('Error applying Kustomization', message);
     await output.showError(`Failed to apply Kustomization: ${message}`);
   }
 }

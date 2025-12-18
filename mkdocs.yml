@@ -1,5 +1,5 @@
 site_name: Kubernetes Manifest Applier
-site_description: "VS Code extension to apply and validate Kubernetes and Kustomize manifests from the editor"
+site_description: 'VS Code extension to apply and validate Kubernetes and Kustomize manifests from the editor'
 site_url: https://ianlintner.github.io/kubernetes-apply-vscode
 repo_url: https://github.com/ianlintner/kubernetes-apply-vscode
 repo_name: ianlintner/kubernetes-apply-vscode

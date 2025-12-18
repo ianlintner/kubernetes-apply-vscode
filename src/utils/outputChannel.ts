@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 let outputChannel: vscode.OutputChannel | null = null;
 
@@ -7,9 +7,7 @@ let outputChannel: vscode.OutputChannel | null = null;
  */
 export function getOutputChannel(): vscode.OutputChannel {
   if (!outputChannel) {
-    outputChannel = vscode.window.createOutputChannel(
-      "Kubernetes Manifest Applier",
-    );
+    outputChannel = vscode.window.createOutputChannel('Kubernetes Manifest Applier');
   }
   return outputChannel;
 }
@@ -31,7 +29,7 @@ export function logError(message: string, error?: Error | string): void {
   const timestamp = new Date().toLocaleTimeString();
   channel.appendLine(`[${timestamp}] ERROR: ${message}`);
   if (error) {
-    const errorStr = typeof error === "string" ? error : error.message;
+    const errorStr = typeof error === 'string' ? error : error.message;
     channel.appendLine(errorStr);
   }
 }
@@ -85,11 +83,8 @@ export async function showError(message: string): Promise<void> {
  * Show success notification with option to view output
  */
 export async function showSuccess(message: string): Promise<void> {
-  const result = await vscode.window.showInformationMessage(
-    message,
-    "View Output",
-  );
-  if (result === "View Output") {
+  const result = await vscode.window.showInformationMessage(message, 'View Output');
+  if (result === 'View Output') {
     show();
   }
 }
@@ -98,8 +93,8 @@ export async function showSuccess(message: string): Promise<void> {
  * Show error notification with option to view output
  */
 export async function showErrorWithOutput(message: string): Promise<void> {
-  const result = await vscode.window.showErrorMessage(message, "View Output");
-  if (result === "View Output") {
+  const result = await vscode.window.showErrorMessage(message, 'View Output');
+  if (result === 'View Output') {
     show();
   }
 }
@@ -117,19 +112,19 @@ export function logCommandOutput(
   const channel = getOutputChannel();
   const timestamp = new Date().toLocaleTimeString();
 
-  channel.appendLine(`\n${"=".repeat(60)}`);
-  channel.appendLine(`[${timestamp}] Command: ${command} ${args.join(" ")}`);
+  channel.appendLine(`\n${'='.repeat(60)}`);
+  channel.appendLine(`[${timestamp}] Command: ${command} ${args.join(' ')}`);
   channel.appendLine(`Exit Code: ${exitCode}`);
 
   if (stdout) {
-    channel.appendLine("\n--- STDOUT ---");
+    channel.appendLine('\n--- STDOUT ---');
     channel.appendLine(stdout);
   }
 
   if (stderr) {
-    channel.appendLine("\n--- STDERR ---");
+    channel.appendLine('\n--- STDERR ---');
     channel.appendLine(stderr);
   }
 
-  channel.appendLine(`${"=".repeat(60)}\n`);
+  channel.appendLine(`${'='.repeat(60)}\n`);
 }

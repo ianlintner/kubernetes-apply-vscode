@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+
+# build output
+out/
+dist/
+
+# VS Code test harness downloads
+.vscode-test/
+
+# MkDocs build output
+site/
+
+# misc
+*.vsix

@@ -1,14 +1,11 @@
-"use strict";
+'use strict';
 var __createBinding =
   (this && this.__createBinding) ||
   (Object.create
     ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
         var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
+        if (!desc || ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)) {
           desc = {
             enumerable: true,
             get: function () {
@@ -26,10 +23,10 @@ var __setModuleDefault =
   (this && this.__setModuleDefault) ||
   (Object.create
     ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
+        Object.defineProperty(o, 'default', { enumerable: true, value: v });
       }
     : function (o, v) {
-        o["default"] = v;
+        o['default'] = v;
       });
 var __importStar =
   (this && this.__importStar) ||
@@ -39,8 +36,7 @@ var __importStar =
         Object.getOwnPropertyNames ||
         function (o) {
           var ar = [];
-          for (var k in o)
-            if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+          for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
           return ar;
         };
       return ownKeys(o);
@@ -50,24 +46,24 @@ var __importStar =
       var result = {};
       if (mod != null)
         for (var k = ownKeys(mod), i = 0; i < k.length; i++)
-          if (k[i] !== "default") __createBinding(result, mod, k[i]);
+          if (k[i] !== 'default') __createBinding(result, mod, k[i]);
       __setModuleDefault(result, mod);
       return result;
     };
   })();
-Object.defineProperty(exports, "__esModule", { value: true });
-const path = __importStar(require("path"));
-const test_electron_1 = require("@vscode/test-electron");
+Object.defineProperty(exports, '__esModule', { value: true });
+const path = __importStar(require('path'));
+const test_electron_1 = require('@vscode/test-electron');
 async function main() {
   try {
-    const extensionDevelopmentPath = path.resolve(__dirname, "../../");
-    const extensionTestsPath = path.resolve(__dirname, "./suite/index");
+    const extensionDevelopmentPath = path.resolve(__dirname, '../../');
+    const extensionTestsPath = path.resolve(__dirname, './suite/index');
     await (0, test_electron_1.runTests)({
       extensionDevelopmentPath,
       extensionTestsPath,
     });
   } catch (err) {
-    console.error("Failed to run tests", err);
+    console.error('Failed to run tests', err);
     process.exit(1);
   }
 }

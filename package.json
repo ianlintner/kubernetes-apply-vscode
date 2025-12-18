@@ -1,8 +1,8 @@
 {
-  "name": "k8s-manifest-applier",
-  "displayName": "Kubernetes Manifest Applier",
-  "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click actions",
-  "version": "0.0.1",
+  "name": "Kubert: K8s Manifest Apply Buttons & Menus",
+  "displayName": "Kubernetes Manifest Applier Visual Studio Code Extension",
+  "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click.",
+  "version": "0.1.0",
   "license": "MIT",
   "publisher": "CatHerding",
   "homepage": "https://ianlintner.github.io/kubernetes-apply-vscode/",

@@ -1,5 +1,5 @@
-import * as vscode from 'vscode';
-import { ManifestDetector } from '../utils/manifestDetector';
+import * as vscode from "vscode";
+import { ManifestDetector } from "../utils/manifestDetector";
 
 /**
  * Provides code lens actions for Kubernetes manifests
@@ -12,17 +12,17 @@ export class ManifestCodeLensProvider implements vscode.CodeLensProvider {
 
   provideCodeLenses(
     document: vscode.TextDocument,
-    _token: vscode.CancellationToken
+    _token: vscode.CancellationToken,
   ): vscode.ProviderResult<vscode.CodeLens[]> {
     void _token;
     // Check if Code Lens is enabled
-    const config = vscode.workspace.getConfiguration('k8s-manifest');
-    if (!config.get<boolean>('enableCodeLens', true)) {
+    const config = vscode.workspace.getConfiguration("k8s-manifest");
+    if (!config.get<boolean>("enableCodeLens", true)) {
       return [];
     }
 
     // Check if this is a YAML file
-    if (document.languageId !== 'yaml') {
+    if (document.languageId !== "yaml") {
       return [];
     }
 
@@ -43,21 +43,21 @@ export class ManifestCodeLensProvider implements vscode.CodeLensProvider {
       // Apply command
       codeLenses.push(
         new vscode.CodeLens(range, {
-          title: '▶ Apply',
-          command: 'k8s-manifest.apply',
+          title: "▶ Apply",
+          command: "k8s-manifest.apply",
           arguments: [document.uri],
-          tooltip: 'Apply manifest with kubectl',
-        })
+          tooltip: "Apply manifest with kubectl",
+        }),
       );
 
       // Validate command
       codeLenses.push(
         new vscode.CodeLens(range, {
-          title: '✓ Validate',
-          command: 'k8s-manifest.validate',
+          title: "✓ Validate",
+          command: "k8s-manifest.validate",
           arguments: [document.uri],
-          tooltip: 'Validate manifest without applying',
-        })
+          tooltip: "Validate manifest without applying",
+        }),
       );
 
       // Only show on first manifest (first apiVersion line)
@@ -67,7 +67,10 @@ export class ManifestCodeLensProvider implements vscode.CodeLensProvider {
     return codeLenses;
   }
 
-  resolveCodeLens?(codeLens: vscode.CodeLens, _token: vscode.CancellationToken): vscode.ProviderResult<vscode.CodeLens> {
+  resolveCodeLens?(
+    codeLens: vscode.CodeLens,
+    _token: vscode.CancellationToken,
+  ): vscode.ProviderResult<vscode.CodeLens> {
     void _token;
     return codeLens;
   }

@@ -1,5 +1,5 @@
-import { execFile } from 'child_process';
-import { promisify } from 'util';
+import { execFile } from "child_process";
+import { promisify } from "util";
 
 const execFileAsync = promisify(execFile);
 
@@ -26,21 +26,21 @@ export class CliExecutor {
    */
   static async applyManifest(
     filePath: string,
-    options: CommandOptions = {}
+    options: CommandOptions = {},
   ): Promise<CommandResult> {
-    const args = ['apply', '-f', filePath];
+    const args = ["apply", "-f", filePath];
 
     if (options.context) {
-      args.push('--context', options.context);
+      args.push("--context", options.context);
     }
     if (options.namespace) {
-      args.push('--namespace', options.namespace);
+      args.push("--namespace", options.namespace);
     }
     if (options.dryRun) {
-      args.push('--dry-run=client');
+      args.push("--dry-run=client");
     }
 
-    return this.executeCommand('kubectl', args, options.cwd);
+    return this.executeCommand("kubectl", args, options.cwd);
   }
 
   /**
@@ -48,18 +48,24 @@ export class CliExecutor {
    */
   static async validateManifest(
     filePath: string,
-    options: CommandOptions = {}
+    options: CommandOptions = {},
   ): Promise<CommandResult> {
-    const args = ['apply', '-f', filePath, '--dry-run=client', '--validate=true'];
+    const args = [
+      "apply",
+      "-f",
+      filePath,
+      "--dry-run=client",
+      "--validate=true",
+    ];
 
     if (options.context) {
-      args.push('--context', options.context);
+      args.push("--context", options.context);
     }
     if (options.namespace) {
-      args.push('--namespace', options.namespace);
+      args.push("--namespace", options.namespace);
     }
 
-    return this.executeCommand('kubectl', args, options.cwd);
+    return this.executeCommand("kubectl", args, options.cwd);
   }
 
   /**
@@ -67,29 +73,38 @@ export class CliExecutor {
    */
   static async buildKustomize(
     dirPath: string,
-    options: CommandOptions = {}
+    options: CommandOptions = {},
   ): Promise<CommandResult> {
     // First build with kustomize
-    const buildResult = await this.executeCommand('kustomize', ['build', dirPath], options.cwd);
+    const buildResult = await this.executeCommand(
+      "kustomize",
+      ["build", dirPath],
+      options.cwd,
+    );
 
     if (!buildResult.success) {
       return buildResult;
     }
 
     // Then pipe to kubectl apply
-    const args = ['apply', '-f', '-'];
+    const args = ["apply", "-f", "-"];
 
     if (options.context) {
-      args.push('--context', options.context);
+      args.push("--context", options.context);
     }
     if (options.namespace) {
-      args.push('--namespace', options.namespace);
+      args.push("--namespace", options.namespace);
     }
     if (options.dryRun) {
-      args.push('--dry-run=client');
+      args.push("--dry-run=client");
     }
 
-    return this.executeCommandWithStdin('kubectl', args, buildResult.stdout, options.cwd);
+    return this.executeCommandWithStdin(
+      "kubectl",
+      args,
+      buildResult.stdout,
+      options.cwd,
+    );
   }
 
   /**
@@ -97,28 +112,31 @@ export class CliExecutor {
    */
   static async applyKustomize(
     dirPath: string,
-    options: CommandOptions = {}
+    options: CommandOptions = {},
   ): Promise<CommandResult> {
-    const args = ['apply', '-k', dirPath];
+    const args = ["apply", "-k", dirPath];
 
     if (options.context) {
-      args.push('--context', options.context);
+      args.push("--context", options.context);
     }
     if (options.namespace) {
-      args.push('--namespace', options.namespace);
+      args.push("--namespace", options.namespace);
     }
     if (options.dryRun) {
-      args.push('--dry-run=client');
+      args.push("--dry-run=client");
     }
 
-    return this.executeCommand('kubectl', args, options.cwd);
+    return this.executeCommand("kubectl", args, options.cwd);
   }
 
   /**
    * Checks if kubectl is available
    */
   static async isKubectlAvailable(): Promise<boolean> {
-    const result = await this.executeCommand('kubectl', ['version', '--client']);
+    const result = await this.executeCommand("kubectl", [
+      "version",
+      "--client",
+    ]);
     return result.success;
   }
 
@@ -126,7 +144,7 @@ export class CliExecutor {
    * Checks if kustomize is available
    */
   static async isKustomizeAvailable(): Promise<boolean> {
-    const result = await this.executeCommand('kustomize', ['version']);
+    const result = await this.executeCommand("kustomize", ["version"]);
     return result.success;
   }
 
@@ -134,21 +152,29 @@ export class CliExecutor {
    * Gets current kubectl context
    */
   static async getCurrentContext(): Promise<string> {
-    const result = await this.executeCommand('kubectl', ['config', 'current-context']);
-    return result.success ? result.stdout.trim() : 'default';
+    const result = await this.executeCommand("kubectl", [
+      "config",
+      "current-context",
+    ]);
+    return result.success ? result.stdout.trim() : "default";
   }
 
   /**
    * Lists available kubectl contexts
    */
   static async listContexts(): Promise<string[]> {
-    const result = await this.executeCommand('kubectl', ['config', 'get-contexts', '-o', 'name']);
+    const result = await this.executeCommand("kubectl", [
+      "config",
+      "get-contexts",
+      "-o",
+      "name",
+    ]);
     if (!result.success) {
       return [];
     }
     return result.stdout
       .trim()
-      .split('\n')
+      .split("\n")
       .filter((ctx) => ctx.length > 0);
   }
 
@@ -158,7 +184,7 @@ export class CliExecutor {
   private static async executeCommand(
     command: string,
     args: string[],
-    cwd?: string
+    cwd?: string,
   ): Promise<CommandResult> {
     try {
       const result = await execFileAsync(command, args, {
@@ -179,9 +205,9 @@ export class CliExecutor {
       };
       return {
         success: false,
-        stdout: err.stdout ?? '',
-        stderr: err.stderr ?? err.message ?? 'Unknown error',
-        exitCode: typeof err.code === 'number' ? err.code : 1,
+        stdout: err.stdout ?? "",
+        stderr: err.stderr ?? err.message ?? "Unknown error",
+        exitCode: typeof err.code === "number" ? err.code : 1,
       };
     }
   }
@@ -193,7 +219,7 @@ export class CliExecutor {
     command: string,
     args: string[],
     stdin: string,
-    cwd?: string
+    cwd?: string,
   ): Promise<CommandResult> {
     return new Promise((resolve) => {
       try {
@@ -202,18 +228,18 @@ export class CliExecutor {
           maxBuffer: 10 * 1024 * 1024,
         });
 
-        let stdout = '';
-        let stderr = '';
+        let stdout = "";
+        let stderr = "";
 
-        child.stdout?.on('data', (data) => {
+        child.stdout?.on("data", (data) => {
           stdout += data;
         });
 
-        child.stderr?.on('data', (data) => {
+        child.stderr?.on("data", (data) => {
           stderr += data;
         });
 
-        child.on('close', (code) => {
+        child.on("close", (code) => {
           resolve({
             success: code === 0,
             stdout,
@@ -228,8 +254,8 @@ export class CliExecutor {
         const err = error as NodeJS.ErrnoException;
         resolve({
           success: false,
-          stdout: '',
-          stderr: err?.message || 'Unknown error',
+          stdout: "",
+          stderr: err?.message || "Unknown error",
           exitCode: 1,
         });
       }

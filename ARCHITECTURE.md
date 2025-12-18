@@ -11,17 +11,19 @@ This VS Code extension provides a lightweight interface for applying Kubernetes 
 **Purpose**: Identifies Kubernetes manifests and Kustomization files
 
 **Key Functions**:
+
 - `analyzeDocument(document: TextDocument)` - Analyzes a document and returns detection results
 - `isValidK8sResource(obj)` - Checks if an object is a valid K8s resource
 - `isKustomizationResource(obj)` - Checks if an object is a Kustomization resource
 
 **Usage**:
+
 ```typescript
-import { ManifestDetector } from './utils/manifestDetector';
+import { ManifestDetector } from "./utils/manifestDetector";
 
 const detection = ManifestDetector.analyzeDocument(document);
 if (detection.isK8sManifest) {
-  console.log('Found', detection.manifests.length, 'Kubernetes resources');
+  console.log("Found", detection.manifests.length, "Kubernetes resources");
 }
 ```
 
@@ -30,6 +32,7 @@ if (detection.isK8sManifest) {
 **Purpose**: Safely executes kubectl and kustomize commands
 
 **Key Methods**:
+
 - `applyManifest(filePath, options)` - Applies a manifest
 - `validateManifest(filePath, options)` - Validates without applying
 - `buildKustomize(dirPath, options)` - Builds Kustomization
@@ -40,19 +43,20 @@ if (detection.isK8sManifest) {
 - `listContexts()` - Lists available contexts
 
 **Usage**:
-```typescript
-import { CliExecutor } from './utils/cliExecutor';
 
-const result = await CliExecutor.applyManifest('manifest.yaml', {
-  context: 'staging',
-  namespace: 'default',
+```typescript
+import { CliExecutor } from "./utils/cliExecutor";
+
+const result = await CliExecutor.applyManifest("manifest.yaml", {
+  context: "staging",
+  namespace: "default",
   dryRun: true,
 });
 
 if (result.success) {
-  console.log('Applied successfully');
+  console.log("Applied successfully");
 } else {
-  console.error('Error:', result.stderr);
+  console.error("Error:", result.stderr);
 }
 ```
 
@@ -61,9 +65,11 @@ if (result.success) {
 **Purpose**: Provides inline code actions (buttons) in the editor
 
 **Key Methods**:
+
 - `provideCodeLenses(document, token)` - Returns code lens for a document
 
 **Extension Points**:
+
 - Add more code lens actions by creating new `CodeLens` objects
 - Modify the regex to show buttons on different lines
 - Add hover providers for additional info
@@ -73,6 +79,7 @@ if (result.success) {
 **Purpose**: Manages logging and user notifications
 
 **Key Functions**:
+
 - `log(message)` - Log to output channel
 - `logError(message, error)` - Log error
 - `show()` - Show output channel
@@ -85,6 +92,7 @@ if (result.success) {
 ### Adding New Commands
 
 1. Define the command handler in `src/commands/manifestCommands.ts`:
+
 ```typescript
 export async function myNewCommand(uri: vscode.Uri): Promise<void> {
   // Implementation
@@ -92,13 +100,18 @@ export async function myNewCommand(uri: vscode.Uri): Promise<void> {
 ```
 
 2. Register in `src/extension.ts`:
+
 ```typescript
 context.subscriptions.push(
-  vscode.commands.registerCommand('k8s-manifest.myNewCommand', commands.myNewCommand)
+  vscode.commands.registerCommand(
+    "k8s-manifest.myNewCommand",
+    commands.myNewCommand,
+  ),
 );
 ```
 
 3. Add to `package.json`:
+
 ```json
 {
   "command": "k8s-manifest.myNewCommand",
@@ -110,6 +123,7 @@ context.subscriptions.push(
 ### Adding New Context Menu Items
 
 In `package.json`, add to `contributes.menus`:
+
 ```json
 {
   "command": "k8s-manifest.myCommand",
@@ -121,6 +135,7 @@ In `package.json`, add to `contributes.menus`:
 ### Adding New Configuration Options
 
 In `package.json`, add to `contributes.configuration.properties`:
+
 ```json
 {
   "k8s-manifest.myOption": {
@@ -132,9 +147,10 @@ In `package.json`, add to `contributes.configuration.properties`:
 ```
 
 Then access in code:
+
 ```typescript
-const config = vscode.workspace.getConfiguration('k8s-manifest');
-const myOption = config.get<boolean>('myOption');
+const config = vscode.workspace.getConfiguration("k8s-manifest");
+const myOption = config.get<boolean>("myOption");
 ```
 
 ### Adding New Providers
@@ -150,9 +166,10 @@ export class MyProvider implements vscode.SomeProvider {
 ```
 
 Register in `src/extension.ts`:
+
 ```typescript
 context.subscriptions.push(
-  vscode.languages.registerSomeProvider({ language: 'yaml' }, new MyProvider())
+  vscode.languages.registerSomeProvider({ language: "yaml" }, new MyProvider()),
 );
 ```
 
@@ -201,16 +218,22 @@ try {
   // Operation
   output.log(`Starting operation...`);
   const result = await cliCommand();
-  output.logCommandOutput(command, args, result.stdout, result.stderr, result.exitCode);
-  
+  output.logCommandOutput(
+    command,
+    args,
+    result.stdout,
+    result.stderr,
+    result.exitCode,
+  );
+
   if (result.success) {
-    await output.showSuccess('Operation succeeded');
+    await output.showSuccess("Operation succeeded");
   } else {
     await output.showErrorWithOutput(`Operation failed:\n${result.stderr}`);
   }
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
-  output.logError('Operation error', message);
+  output.logError("Operation error", message);
   await output.showError(`Operation failed: ${message}`);
 }
 ```
@@ -233,9 +256,10 @@ try {
 ### Unit Tests
 
 Create test files in `test/suite/`:
+
 ```typescript
-suite('Feature Test', () => {
-  test('should do something', () => {
+suite("Feature Test", () => {
+  test("should do something", () => {
     // Test implementation
   });
 });

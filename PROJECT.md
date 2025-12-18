@@ -47,23 +47,27 @@ A fully functional VS Code extension for applying Kubernetes and Kustomize manif
 ## 🚀 Key Features Implemented
 
 ### 1. **Code Lens Actions** (Gutter Buttons)
+
 - "▶ Apply" button - Apply manifest with kubectl
 - "✓ Validate" button - Dry-run validation
 - Appears on detected Kubernetes manifests
 - Configurable on/off via settings
 
 ### 2. **Context Menu Integration**
+
 - **Editor**: Right-click to apply/validate manifests
 - **Explorer**: Apply, build, or apply Kustomizations
 - **Command Palette**: Access via Cmd+Shift+P
 
 ### 3. **Manifest Detection**
+
 - Automatically identifies Kubernetes resources
 - Detects Kustomization files (by name and content)
 - Handles multi-document YAML files
 - Validates K8s required fields: `apiVersion`, `kind`, `metadata`
 
 ### 4. **CLI Execution**
+
 - Safe execution with proper error handling
 - Supports `kubectl apply`, `validate`, `kustomize build`
 - Configurable context and namespace
@@ -71,13 +75,16 @@ A fully functional VS Code extension for applying Kubernetes and Kustomize manif
 - Checks tool availability on startup
 
 ### 5. **Output & Logging**
+
 - Dedicated "Kubernetes Manifest Applier" output channel
 - Timestamped logs for all operations
 - Success/error notifications with quick links
 - Detailed command output with stdout/stderr
 
 ### 6. **Configuration Options**
+
 Users can configure via VS Code Settings:
+
 ```json
 {
   "k8s-manifest.enableCodeLens": true,
@@ -89,12 +96,12 @@ Users can configure via VS Code Settings:
 
 ## 📋 Supported Commands
 
-| Command | Description | Trigger |
-|---------|-------------|---------|
-| `k8s-manifest.apply` | Apply manifest | Gutter/Menu/Palette |
-| `k8s-manifest.validate` | Validate manifest | Gutter/Menu/Palette |
-| `k8s-manifest.buildKustomize` | Build Kustomization | Menu/Palette |
-| `k8s-manifest.applyKustomize` | Apply Kustomization | Menu/Palette |
+| Command                       | Description         | Trigger             |
+| ----------------------------- | ------------------- | ------------------- |
+| `k8s-manifest.apply`          | Apply manifest      | Gutter/Menu/Palette |
+| `k8s-manifest.validate`       | Validate manifest   | Gutter/Menu/Palette |
+| `k8s-manifest.buildKustomize` | Build Kustomization | Menu/Palette        |
+| `k8s-manifest.applyKustomize` | Apply Kustomization | Menu/Palette        |
 
 ## 🔧 Module Dependencies
 
@@ -118,9 +125,11 @@ CodeLensProvider
 ## 📦 Dependencies
 
 **Runtime**:
+
 - `js-yaml` - YAML parsing
 
 **Development**:
+
 - `vscode` - VS Code API types
 - `typescript` - Language & compiler
 - `@types/js-yaml` - Type definitions
@@ -141,6 +150,7 @@ CodeLensProvider
 ## 🧪 How to Test
 
 ### Quick Test (5 minutes)
+
 1. Open the project in VS Code
 2. Press `F5` to launch in debug mode
 3. Open `example-manifest.yaml`
@@ -148,11 +158,13 @@ CodeLensProvider
 5. View output in the "Kubernetes Manifest Applier" channel
 
 ### Full Test Suite
+
 ```bash
 npm test
 ```
 
 ### Watch Mode (for development)
+
 ```bash
 npm run watch
 ```
@@ -219,6 +231,7 @@ npm run watch
 ## 🚢 Ready for Distribution?
 
 Yes! The extension is ready to:
+
 - ✅ Use in development (`npm run watch`)
 - ✅ Test in VS Code debug mode (`F5`)
 - ✅ Package as VSIX (`vsce package`)

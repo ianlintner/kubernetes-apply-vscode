@@ -3,6 +3,7 @@
 ## Setup & Development
 
 ### Prerequisites
+
 - Node.js 16+ and npm
 - TypeScript (installed via npm)
 - VS Code 1.85.0 or later
@@ -10,16 +11,19 @@
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Compile TypeScript:
+
 ```bash
 npm run compile
 ```
 
 3. Watch mode (for development):
+
 ```bash
 npm run watch
 ```
@@ -110,15 +114,18 @@ Settings available in VS Code Settings (Cmd+, on Mac):
 ## Troubleshooting
 
 ### "kubectl not found" warning
+
 - Ensure kubectl is installed: `kubectl version --client`
 - Add kubectl to your PATH if needed
 
 ### Code Lens not showing
+
 - Check that `k8s-manifest.enableCodeLens` is `true` in settings
 - Verify the file is detected as a YAML file (bottom right corner should show "YAML")
 - Ensure file contains valid Kubernetes manifest fields
 
 ### Commands not working
+
 - Open the output channel to view error details
 - Check that kubectl is available: `which kubectl`
 - Verify kubectl is configured: `kubectl config current-context`

@@ -9,7 +9,7 @@ namespace: demo-app
 
 commonLabels:
   managed-by: kustomize
-  
+
 commonAnnotations:
   created-at: "2025-12-18"
 

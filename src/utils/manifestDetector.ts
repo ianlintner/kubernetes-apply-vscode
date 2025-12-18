@@ -1,6 +1,6 @@
-import * as vscode from 'vscode';
-import * as yaml from 'js-yaml';
-import * as path from 'path';
+import * as vscode from "vscode";
+import * as yaml from "js-yaml";
+import * as path from "path";
 
 type K8sMetadata = {
   name?: string;
@@ -20,7 +20,7 @@ export interface DetectionResult {
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
+  return typeof value === "object" && value !== null;
 }
 
 /**
@@ -31,19 +31,19 @@ export class ManifestDetector {
   /**
    * Analyzes a document and returns detection results
    */
-  static analyzeDocument(
-    document: vscode.TextDocument
-  ): DetectionResult {
+  static analyzeDocument(document: vscode.TextDocument): DetectionResult {
     const content = document.getText();
     const fileName = path.basename(document.fileName);
 
     // Check if it's a kustomization file by name
     const isKustomizationByName =
-      fileName === 'kustomization.yaml' || fileName === 'kustomization.yml';
+      fileName === "kustomization.yaml" || fileName === "kustomization.yml";
 
     // Try to parse YAML and extract manifests
-    const { manifests, isK8s, isKustomization } =
-      this.parseYamlContent(content, isKustomizationByName);
+    const { manifests, isK8s, isKustomization } = this.parseYamlContent(
+      content,
+      isKustomizationByName,
+    );
 
     return {
       isK8sManifest: isK8s,
@@ -58,7 +58,7 @@ export class ManifestDetector {
    */
   private static parseYamlContent(
     content: string,
-    isKustomizationByName: boolean
+    isKustomizationByName: boolean,
   ): {
     manifests: K8sManifest[];
     isK8s: boolean;
@@ -111,11 +111,11 @@ export class ManifestDetector {
    */
   private static isValidK8sResource(obj: K8sManifest): boolean {
     return (
-      typeof obj === 'object' &&
+      typeof obj === "object" &&
       obj !== null &&
-      typeof obj.apiVersion === 'string' &&
-      typeof obj.kind === 'string' &&
-      typeof obj.metadata === 'object' &&
+      typeof obj.apiVersion === "string" &&
+      typeof obj.kind === "string" &&
+      typeof obj.metadata === "object" &&
       obj.metadata !== null
     );
   }
@@ -124,13 +124,13 @@ export class ManifestDetector {
    * Validates if an object is a Kustomization resource
    */
   private static isKustomizationResource(obj: K8sManifest): boolean {
-    if (typeof obj !== 'object' || obj === null) {
+    if (typeof obj !== "object" || obj === null) {
       return false;
     }
 
     return (
-      obj.kind === 'Kustomization' &&
-      obj.apiVersion === 'kustomize.config.k8s.io/v1beta1'
+      obj.kind === "Kustomization" &&
+      obj.apiVersion === "kustomize.config.k8s.io/v1beta1"
     );
   }
 

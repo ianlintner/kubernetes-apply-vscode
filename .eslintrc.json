@@ -11,12 +11,7 @@
     "project": "./tsconfig.json",
     "tsconfigRootDir": "."
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "ignorePatterns": ["out/**", "dist/**", "*.d.ts"]
 }

@@ -69,6 +69,7 @@ kuber/
 ### Configuration Options
 
 Users can configure via VS Code settings:
+
 - `k8s-manifest.enableCodeLens` - Toggle gutter buttons
 - `k8s-manifest.kubectlContext` - Specify kubectl context
 - `k8s-manifest.kubectlNamespace` - Specify namespace
@@ -77,10 +78,12 @@ Users can configure via VS Code settings:
 ### Context Menu Integration
 
 **Editor Context Menu:**
+
 - Apply Manifest
 - Validate Manifest
 
 **Explorer Context Menu:**
+
 - Apply Manifest (for .yaml/.yml files)
 - Build with Kustomize (for kustomization.yaml)
 - Apply Kustomize (for kustomization.yaml)
@@ -100,6 +103,7 @@ Users can configure via VS Code settings:
 ### Next Steps
 
 The extension is ready for:
+
 1. **Testing in VS Code** - Use `F5` to launch extension in debug mode
 2. **Testing with Sample Manifests** - Create test YAML files with K8s resources
 3. **Packaging** - Use `vsce package` to create a .vsix file for distribution

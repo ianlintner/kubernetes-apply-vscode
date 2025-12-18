@@ -34,13 +34,13 @@ spec:
         app: demo
     spec:
       containers:
-      - name: demo-container
-        image: nginx:latest
-        ports:
-        - containerPort: 80
-        env:
-        - name: DEMO_VAR
-          value: "hello-kubernetes"
+        - name: demo-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: DEMO_VAR
+              value: "hello-kubernetes"
 ---
 apiVersion: v1
 kind: Service
@@ -50,7 +50,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 80
+    - port: 80
+      targetPort: 80
   selector:
     app: demo

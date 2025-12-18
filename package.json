@@ -5,6 +5,12 @@
   "version": "0.1.1",
   "license": "MIT",
   "publisher": "CatHerding",
+  "icon": "docs/assets/logo.png",
+  "galleryBanner": {
+    "color": "#1F6FEB",
+    "theme": "dark"
+  },
+  "markdown": "github",
   "homepage": "https://ianlintner.github.io/kubernetes-apply-vscode/",
   "bugs": {
     "url": "https://github.com/ianlintner/kubernetes-apply-vscode/issues"

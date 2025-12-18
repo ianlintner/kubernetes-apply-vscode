@@ -3,7 +3,12 @@
   "displayName": "Kubernetes Manifest Applier",
   "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click actions",
   "version": "0.0.1",
+  "license": "MIT",
   "publisher": "k8smanifest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ianlintner/kubernetes-apply-vscode"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -19,7 +24,6 @@
     "manifest",
     "deployment"
   ],
-  "icon": "media/icon.png",
   "activationEvents": [
     "onLanguage:yaml",
     "workspaceContains:**/kustomization.yaml"

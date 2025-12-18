@@ -58,6 +58,54 @@ jobs:
         run: |
           node -e "const v=require('./package.json').version; const tag=(process.env.GITHUB_EVENT_NAME==='release' ? (require(process.env.GITHUB_EVENT_PATH).release.tag_name) : process.env.GITHUB_REF_NAME); const t=String(tag||'').replace(/^v/,''); if(!t){ console.error('Could not determine tag name for version check'); process.exit(1);} if(v!==t){ console.error(`Version mismatch: package.json=${v} tag=${t}`); process.exit(1);} console.log(`Version OK: ${v}`);"
 
+      - name: Skip publish if version already exists in Marketplace
+        if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'release' || github.event.inputs.publish == 'true') && env.SKIP_PUBLISH != '1'
+        run: |
+          set -euo pipefail
+
+          node - <<'NODE'
+          const fs = require('fs');
+          const cp = require('child_process');
+          const pkg = require('./package.json');
+
+          const extensionId = `${pkg.publisher}.${pkg.name}`;
+          const targetVersion = String(pkg.version);
+
+          // Marketplace info is public; this does not require auth.
+          let raw;
+          try {
+            raw = cp.execSync(`npx --yes @vscode/vsce show ${extensionId} --json`, {
+              stdio: ['ignore', 'pipe', 'pipe'],
+              encoding: 'utf8',
+            });
+          } catch (e) {
+            // If the extension doesn't exist yet (first publish), vsce may error.
+            // In that case, we should proceed with publishing.
+            const stderr = e?.stderr ? String(e.stderr) : '';
+            console.log(`vsce show failed (likely first publish). Proceeding. ${stderr}`);
+            process.exit(0);
+          }
+
+          let data;
+          try {
+            data = JSON.parse(raw);
+          } catch {
+            console.log('Could not parse vsce show output; proceeding with publish.');
+            process.exit(0);
+          }
+
+          const versions = Array.isArray(data?.versions)
+            ? data.versions.map((v) => (typeof v === 'string' ? v : v?.version)).filter(Boolean)
+            : [];
+
+          if (versions.includes(targetVersion)) {
+            console.log(`Version ${targetVersion} already published for ${extensionId}; skipping publish.`);
+            fs.appendFileSync(process.env.GITHUB_ENV, 'SKIP_PUBLISH=1\n');
+          } else {
+            console.log(`Version ${targetVersion} not found in Marketplace for ${extensionId}; continuing.`);
+          }
+          NODE
+
       - name: Compile
         run: npm run compile
 

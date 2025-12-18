@@ -2,7 +2,7 @@
   "name": "kubert",
   "displayName": "Kubernetes Manifest Applier Visual Studio Code Extension",
   "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "publisher": "CatHerding",
   "homepage": "https://ianlintner.github.io/kubernetes-apply-vscode/",

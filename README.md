@@ -1,6 +1,8 @@
-# Kubernetes Manifest Applier
+# Kubernetes Manifest Applier Extension
 
 Apply and validate Kubernetes manifests (and Kustomize builds) directly from VS Code with a couple of clicks.
+
+![Extension Screenshot](docs/assets/screenshot.png)
 
 - **Code Lens buttons** in YAML files: Apply or validate instantly
 - **Explorer & editor menus**: Apply/validate manifests; build/apply kustomizations
@@ -31,6 +33,10 @@ Launch the extension with **F5** in VS Code, open a manifest, and use the gutter
 
 - `kubectl` (required)
 - `kustomize` (optional, for kustomization build/apply)
+
+## Publishing
+
+See `PUBLISHING.md` for Marketplace setup and the GitHub Actions release workflow.
 
 ## License
 

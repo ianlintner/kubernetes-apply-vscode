@@ -4,7 +4,11 @@
   "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click actions",
   "version": "0.0.1",
   "license": "MIT",
-  "publisher": "k8smanifest",
+  "publisher": "CatHerding",
+  "homepage": "https://ianlintner.github.io/kubernetes-apply-vscode/",
+  "bugs": {
+    "url": "https://github.com/ianlintner/kubernetes-apply-vscode/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ianlintner/kubernetes-apply-vscode"
@@ -113,6 +117,8 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "package": "npx --yes @vscode/vsce package",
+    "publish": "npx --yes @vscode/vsce publish",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"

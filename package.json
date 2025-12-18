@@ -1,5 +1,5 @@
 {
-  "name": "Kubert: K8s Manifest Apply Buttons & Menus",
+  "name": "kubert",
   "displayName": "Kubernetes Manifest Applier Visual Studio Code Extension",
   "description": "Apply Kubernetes and Kustomize manifests directly from the VS Code editor with one-click.",
   "version": "0.1.0",

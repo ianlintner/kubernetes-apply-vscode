@@ -1,4 +1,6 @@
-# Kubernetes Manifest Applier
+# Kubert Manifest Applier
+
+![Kubert Logo](assets/logo.png)
 
 Apply Kubernetes and Kustomize manifests directly from VS Code with one-click actions.
 

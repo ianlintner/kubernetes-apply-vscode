@@ -12,14 +12,19 @@
   },
   "badges": [
     {
-      "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml/badge.svg?branch=main",
-      "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/ci.yml",
-      "description": "CI"
+      "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/node-ci.yml/badge.svg?branch=main",
+      "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/node-ci.yml",
+      "description": "Node CI"
+    },
+    {
+      "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs-check.yml/badge.svg?branch=main",
+      "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs-check.yml",
+      "description": "Docs Check"
     },
     {
       "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml/badge.svg?branch=main",
       "href": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/docs.yml",
-      "description": "Docs"
+      "description": "Docs Deploy"
     },
     {
       "url": "https://github.com/ianlintner/kubernetes-apply-vscode/actions/workflows/publish.yml/badge.svg?branch=main",

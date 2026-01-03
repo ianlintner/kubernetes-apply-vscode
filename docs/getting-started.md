@@ -8,6 +8,7 @@ Follow these steps to set up the extension for local development and debugging.
 - VS Code 1.85.0 or later
 - `kubectl` installed and on your `PATH`
 - `kustomize` installed if you plan to use Kustomization features
+- (Optional) [VSCode Kubernetes Extension](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) for context/namespace integration
 
 ## Install and build
 

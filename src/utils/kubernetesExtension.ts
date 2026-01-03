@@ -62,7 +62,7 @@ export class KubernetesExtension {
 
       // Get current namespace from the active context
       const namespaceResult = await kubectl.api.invokeCommand(
-        "config view --minify --output 'jsonpath={..namespace}'",
+        "config view --minify --output 'jsonpath={.contexts[0].context.namespace}'",
       );
       if (namespaceResult && namespaceResult.code === 0) {
         const namespace = namespaceResult.stdout.trim();
@@ -91,6 +91,8 @@ export class KubernetesExtension {
 
   /**
    * Get the namespace from the Kubernetes extension's current context
+   * Note: If you need both namespace and context, call getCurrentContext() directly
+   * to avoid duplicate API calls.
    */
   static async getNamespace(): Promise<string | undefined> {
     const context = await this.getCurrentContext();
@@ -99,6 +101,8 @@ export class KubernetesExtension {
 
   /**
    * Get the context name from the Kubernetes extension
+   * Note: If you need both namespace and context, call getCurrentContext() directly
+   * to avoid duplicate API calls.
    */
   static async getContext(): Promise<string | undefined> {
     const context = await this.getCurrentContext();

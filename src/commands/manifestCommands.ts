@@ -21,13 +21,13 @@ async function getKubectlConfig() {
       const isAvailable = await KubernetesExtension.isAvailable();
       if (isAvailable) {
         const k8sContext = await KubernetesExtension.getCurrentContext();
-        
+
         // Use Kubernetes extension context if available and not overridden by setting
         if (k8sContext.context && !context) {
           context = k8sContext.context;
           output.log(`Using context from Kubernetes extension: ${context}`);
         }
-        
+
         // Use Kubernetes extension namespace if available and not overridden by setting
         if (k8sContext.namespace && !namespace) {
           namespace = k8sContext.namespace;

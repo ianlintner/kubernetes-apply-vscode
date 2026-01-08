@@ -44,9 +44,7 @@ export class KubernetesExtension {
       }
 
       // Get current context
-      const contextResult = await kubectl.api.invokeCommand(
-        'config current-context',
-      );
+      const contextResult = await kubectl.api.invokeCommand('config current-context');
       if (contextResult && contextResult.code === 0) {
         const contextName = contextResult.stdout.trim();
         if (contextName) {

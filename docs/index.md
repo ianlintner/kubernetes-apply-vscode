@@ -10,7 +10,7 @@ Apply Kubernetes and Kustomize manifests directly from VS Code with one-click ac
 - **Context menus**: Apply/validate manifests and build/apply Kustomize from the explorer.
 - **Manifest detection**: Auto-detects Kubernetes resources, multi-document YAML, and kustomization files.
 - **Dry run mode**: Validate changes without applying.
-- **Context & namespace selection**: Respect workspace settings.
+- **Context & namespace selection**: Respect workspace settings or integrate with VSCode Kubernetes Extension.
 - **Output channel**: Dedicated logs and notifications for every command.
 
 ## What you can do

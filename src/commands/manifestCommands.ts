@@ -3,15 +3,51 @@ import * as path from 'path';
 import { CliExecutor } from '../utils/cliExecutor';
 import * as output from '../utils/outputChannel';
 import * as fs from 'fs';
+import { KubernetesExtension } from '../utils/kubernetesExtension';
 
 /**
  * Gets configuration values for kubectl execution
  */
-function getKubectlConfig() {
+async function getKubectlConfig() {
   const config = vscode.workspace.getConfiguration('k8s-manifest');
+  const useK8sExtension = config.get<boolean>('useKubernetesExtension') || false;
+
+  let context = config.get<string>('kubectlContext') || undefined;
+  let namespace = config.get<string>('kubectlNamespace') || undefined;
+
+  // If Kubernetes extension integration is enabled, try to get context/namespace from it
+  if (useK8sExtension) {
+    try {
+      const isAvailable = await KubernetesExtension.isAvailable();
+      if (isAvailable) {
+        const k8sContext = await KubernetesExtension.getCurrentContext();
+
+        // Use Kubernetes extension context if available and not overridden by setting
+        if (k8sContext.context && !context) {
+          context = k8sContext.context;
+          output.log(`Using context from Kubernetes extension: ${context}`);
+        }
+
+        // Use Kubernetes extension namespace if available and not overridden by setting
+        if (k8sContext.namespace && !namespace) {
+          namespace = k8sContext.namespace;
+          output.log(`Using namespace from Kubernetes extension: ${namespace}`);
+        }
+      } else {
+        output.log('Kubernetes extension is not available, using configuration settings');
+      }
+    } catch (error) {
+      output.logError(
+        'Error getting context from Kubernetes extension',
+        error instanceof Error ? error.message : String(error),
+      );
+      output.log('Falling back to configuration settings');
+    }
+  }
+
   return {
-    context: config.get<string>('kubectlContext') || undefined,
-    namespace: config.get<string>('kubectlNamespace') || undefined,
+    context,
+    namespace,
     dryRun: config.get<boolean>('dryRun') || false,
   };
 }
@@ -31,7 +67,7 @@ export async function applyManifest(uri: vscode.Uri): Promise<void> {
     output.log(`Applying manifest: ${filePath}`);
     output.show();
 
-    const config = getKubectlConfig();
+    const config = await getKubectlConfig();
     const result = await CliExecutor.applyManifest(filePath, {
       context: config.context,
       namespace: config.namespace,
@@ -74,7 +110,7 @@ export async function validateManifest(uri: vscode.Uri): Promise<void> {
     output.log(`Validating manifest: ${filePath}`);
     output.show();
 
-    const config = getKubectlConfig();
+    const config = await getKubectlConfig();
     const result = await CliExecutor.validateManifest(filePath, {
       context: config.context,
       namespace: config.namespace,
@@ -165,7 +201,7 @@ export async function applyKustomize(uri: vscode.Uri): Promise<void> {
     output.log(`Applying Kustomization: ${dirPath}`);
     output.show();
 
-    const config = getKubectlConfig();
+    const config = await getKubectlConfig();
     const result = await CliExecutor.applyKustomize(dirPath, {
       context: config.context,
       namespace: config.namespace,

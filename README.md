@@ -15,6 +15,7 @@ Apply and validate Kubernetes manifests (and Kustomize builds) directly from VS 
 - **Explorer & editor menus**: Apply/validate manifests; build/apply kustomizations
 - **Manifest detection**: Auto-detects Kubernetes resources and `kustomization.yaml`
 - **Dry run** and **context/namespace** options respected
+- **VSCode Kubernetes Extension integration**: Optionally integrate with the official Kubernetes extension to automatically use its context and namespace
 - **Output channel** for detailed command logs and notifications
 
 ## Documentation
@@ -40,6 +41,7 @@ Launch the extension with **F5** in VS Code, open a manifest, and use the gutter
 
 - `kubectl` (required)
 - `kustomize` (optional, for kustomization build/apply)
+- [Kubernetes extension](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) (optional, for context/namespace integration)
 
 ## Publishing
 

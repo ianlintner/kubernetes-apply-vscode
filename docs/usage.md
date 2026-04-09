@@ -32,9 +32,20 @@ Configure via **Settings ➜ Extensions ➜ Kubernetes Manifest Applier** or `se
   "k8s-manifest.enableCodeLens": true,
   "k8s-manifest.kubectlContext": "",
   "k8s-manifest.kubectlNamespace": "",
-  "k8s-manifest.dryRun": false
+  "k8s-manifest.dryRun": false,
+  "k8s-manifest.useKubernetesExtension": false
 }
 ```
+
+### VSCode Kubernetes Extension Integration
+
+When `k8s-manifest.useKubernetesExtension` is enabled, this extension will automatically use the context and namespace from the [VSCode Kubernetes Extension](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) if it's installed. This allows you to:
+
+- Use the same context/namespace shown in the Kubernetes extension's explorer
+- Avoid manually configuring context and namespace in multiple places
+- Automatically sync with context/namespace changes made in the Kubernetes extension
+
+**Note**: Manual settings (`k8s-manifest.kubectlContext` and `k8s-manifest.kubectlNamespace`) take precedence over values from the Kubernetes extension.
 
 ## Output and logging
 
@@ -46,3 +57,4 @@ Configure via **Settings ➜ Extensions ➜ Kubernetes Manifest Applier** or `se
 - **Validate before applying**: enable `k8s-manifest.dryRun` or click **✓ Validate** first.
 - **Work in a specific namespace**: set `k8s-manifest.kubectlNamespace` in Settings.
 - **Apply a kustomization**: right-click the folder containing `kustomization.yaml` → **Apply Kustomize**.
+- **Integrate with Kubernetes extension**: enable `k8s-manifest.useKubernetesExtension` to automatically use the context and namespace from the VSCode Kubernetes Extension.

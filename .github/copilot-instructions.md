@@ -5,6 +5,7 @@ maintenance system. The orchestrator runs weekly via GitHub Actions and assigns 
 `@copilot` via structured issue and PR comments.
 
 Agent instruction files live in `.github/agents/`:
+
 - `maintainer-pr.md` — how to respond to PR fix requests
 - `maintainer-issue.md` — how to execute assigned issues
 - `maintainer-upgrade.md` — how to apply caretaker upgrades

@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-W17] — 2026-04-20
+
+- setup caretaker (#4)
+- upgrade caretaker configuration to v0.2.0 (#7)
+- Upgrade caretaker to v0.5.2 (#9)
+
 ## 0.0.1
 
 - Initial release

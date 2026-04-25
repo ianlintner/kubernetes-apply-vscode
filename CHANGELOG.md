@@ -1,8 +1,7 @@
 # Changelog
 
-## [2026-W17] — 2026-04-24
+## [2026-W17] — 2026-04-25
 
-- Upgrade caretaker to v0.5.2 (#9)
 - upgrade caretaker to v0.10.0 (#12)
 - rename dispatch mode upgrade-only → upgrade (#13)
 - enable fleet-registry heartbeat with OAuth2 (#18)

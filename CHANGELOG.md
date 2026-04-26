@@ -1,6 +1,6 @@
 # Changelog
 
-## [2026-W17] — 2026-04-25
+## [2026-W17] — 2026-04-26
 
 - upgrade caretaker to v0.10.0 (#12)
 - rename dispatch mode upgrade-only → upgrade (#13)
